@@ -31,7 +31,7 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("catalog: category", kwargs={"category_slug": self.slug})
+        return reverse("catalog:category", kwargs={"category_slug": self.slug})
     
 class Route(models.Model):
     """
