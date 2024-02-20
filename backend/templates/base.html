@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}
-            Document {% endblock%} </title>
+    <title>{{ title }}</title>
 </head>
 <body>
     <header>
@@ -19,7 +18,7 @@
                             </ul>
                         </li>
                         <li><a class="nav-item" href="{% url "catalog:routes" %}">Наши маршруты</a></li>
-                        <li><a class="nav-item" href="#">Расписание</a></li>
+                        <li><a class="nav-item" href="{% url "schedule:index" %}">Расписание</a></li>
                     </ul>
             </div>
         </nav>

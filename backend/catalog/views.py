@@ -20,8 +20,12 @@ def routes_view(request):
 def route_detail_view(request, slug=False):
     """Представление отдельного маршрута"""
     route = get_object_or_404(Route, slug=slug)
+    context = {
+        'title': route.name,
+        'route': route,
+    }
 
-    return render(request, 'catalog/route_detail.html', {'route': route})
+    return render(request, 'catalog/route_detail.html', context=context)
 
 
 def category_list(request, slug):

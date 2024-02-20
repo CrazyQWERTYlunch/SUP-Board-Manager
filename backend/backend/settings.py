@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Созданные приложения
     'main.apps.MainConfig',
     'catalog.apps.CatalogConfig',
+    'schedule.apps.ScheduleConfig',
 ]
 
 MIDDLEWARE = [
