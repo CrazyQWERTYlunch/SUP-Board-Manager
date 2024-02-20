@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block title %}{{ title }}
+{% endblock %}
+
+{% block content %}
+    {% for route in routes %}
+           <h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5>
+            {% comment %} <a href="{% url "catalog:route" route.slug %}"> {% endcomment %}
+            {% comment %} {{ route.name }} {% endcomment %}
+            {{ route.price }}
+        {% comment %} <h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5> {% endcomment %}
+        {% comment %} {{ route.price }}  {% endcomment %}
+        <p></p>
+        
+    {% endfor %}
+{% endblock %}

@@ -9,7 +9,12 @@ def routes_view(request):
 
     routes = Route.objects.all() # Возможно стоит перекрутить на показ с категориями
 
-    return(request, 'catalog/routes.html', {'routes': routes})
+    context = {
+        'title': 'SUP-Маршруты',
+        'routes': routes,
+    }
+    
+    return render(request, 'catalog/routes.html', context=context)
 
 
 def route_detail_view(request, slug=False):

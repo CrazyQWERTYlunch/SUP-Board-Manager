@@ -59,7 +59,7 @@ class Route(models.Model):
         return f'{self.name} - {self.price}'
     
     def get_absolute_url(self):
-        return reverse("route", kwargs={"slug": self.slug})
+        return reverse("catalog:route", kwargs={"slug": self.slug})
     
 
     # Прокси и менеджер модели
