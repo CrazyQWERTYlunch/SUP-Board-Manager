@@ -5,8 +5,8 @@ from .models import Event
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['route_display', 'date', 'start', 'end', 'remaining_seats', 'total_seats', 'status']
-    list_filter = ['date', 'status']
+    list_display = ['route_display', 'start', 'end', 'remaining_seats', 'total_seats', 'status']
+    list_filter = ['start', 'status']
 
 
     def route_display(self, obj):

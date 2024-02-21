@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% comment %} <p>{{event.id}}</p> {% endcomment %}
+<form action="{% url "order:create_order" event.id %}" method="post">
+    {% csrf_token %}
+    <h3>{{event.route.name}}</h3>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="id_fullname" class="form-label">Имя*:</label>
+            <input type="text" class="form-control" id="id_fullname" name="fullname"
+                placeholder="Введите имя"
+                value=" {% if form.fullname.value %}{{form.fullname.value}}{% endif %}"
+                required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="id_phone_number" class="form-label">Номер телефона*:</label>
+            <input type="text" class="form-control" id="id_phone_number" name="phone_number"
+                value=" {% if form.phone_number.value %}{{form.phone_number.value}}{% endif %}"
+                placeholder="В формате: XXX-XXX-XX-XX"
+                required>
+                {% if form.phone_number.errors %}
+                <div class="alert alert-danger show"> <p>Ошибка в местах</p> </div>
+                {% endif %}
+        </div>
+        </div>
+        <div class="col-md-12 mb-3">
+            <label for="id_email" class="form-label">Электронная почта*: </label>
+            <input type="email" class="form-control" id="id_email" name="email"
+                value=" {% if form.email.value %}{{form.email.value}}{% endif %}"
+                placeholder="В формате: xxx@xx.xx"
+                required>
+                {% if form.email.errors %}
+                <div class="alert alert-danger show"> <p>Ошибка в местах</p> </div>
+                {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_quantity" class="form-label">Количество мест*:</label>
+            <input type="number" class="form-control" step="1" min="1" max="100" id="id_quantity" name="quantity"
+                value="{% if form.quantity.value %}{{form.quantity.value}}{% endif %}"
+                required>
+                {% if form.quantity.errors %}
+                <div class="alert alert-danger show"> <p>Ошибка в местах</p> </div>
+                {% endif %}
+        </div>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Способ оплаты: </label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="payment_by_card"
+                    id="id_payment_by_card" value="0" checked>
+                <label class="form-check-label" for="id_payment_by_card">Оплата
+                    картой</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="payment_by_card"
+                    id="id_payment_by_card" value="1">
+                <label class="form-check-label" for="id_payment_by_card">Наличными/картой
+                    при получении</label>
+                    {% if form.payment_by_card.errors %}
+                        <div class="alert alert-danger show"> <p>Ошибка в радио</p> </div>
+                    {% endif %}
+            </div>
+        </div>
+    </div> 
+    <button type="submit" class="btn btn-dark">Оформить заказ</button>
+</form>
+
+{% endblock  %}

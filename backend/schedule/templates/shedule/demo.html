@@ -10,9 +10,11 @@
             {{event.start}}
             {{event.end}}
         </a>
-            <p>
-                +Записаться на прогулку+
-            </p>
+            <a class="btn btn-dark" href="{% url "order:create_order" event.id %}"> <!--Чтобы работало с конкретными прогулками передавать id-->
+                <p>
+                    +Записаться на прогулку+
+                </p>
+            </a>
     {% endfor %}
 
 {% endblock  %}
