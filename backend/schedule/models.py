@@ -10,7 +10,7 @@ class Event(models.Model):
     )
     category = models.ForeignKey(to=Category, default='SUP-прогулка', on_delete=models.CASCADE, verbose_name='Категория')
     route = models.ForeignKey(to=Route, on_delete=models.CASCADE, verbose_name='Маршрут') # limit_choices_to={"category": category} может стоит как-то добавить и ограничить
-    price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2, verbose_name='Цена') # Докинуть автозаполнение
+    price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2, verbose_name='Цена') # ЧТо-то придумать
     total_seats = models.PositiveSmallIntegerField(verbose_name='Всего мест')
     remaining_seats = models.PositiveIntegerField(verbose_name='Осталось мест') 
     start = models.DateTimeField(null=True, blank=True, verbose_name='Начало прогулки')
