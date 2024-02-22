@@ -4,10 +4,45 @@
 
 {% block content %}
     {% for route in routes %}
-           <h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-lg-1">
+                <!--Просто отступ-->
+            </div>
+                <!--Карта маршрута-->
+                <div class="col-lg-10 col-md-12">
+                    <div class="card m-3">
+                        <div class="row g-0">
+                        <div class="col-md-5">
+                            {% if route.image %}
+                                <img src="{{route.image.url}}" class="img-fluid rounded-start" alt="{{route.name}}">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                            <h5 class="card-title"><h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5></h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <p class="card-text"><small class="text-body-secondary">цена: {{ route.price }}</small></p>
+                            </div>
+                        </div>
+                        </div>
+                    </div> 
+                </div>
+
+            <div class="col-lg-1 col-md-12">
+                
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+
+           {% comment %} <h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5> {% endcomment %}
             {% comment %} <a href="{% url "catalog:route" route.slug %}"> {% endcomment %}
             {% comment %} {{ route.name }} {% endcomment %}
-            {{ route.price }}
+            
         {% comment %} <h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5> {% endcomment %}
         {% comment %} {{ route.price }}  {% endcomment %}
         <p></p>

@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if route.image %}
+        <img src="{{route.image.url}}" class="img-fluid rounded-start" alt="{{route.name}}">
+    {% endif %}
     {{route.name}}
     {{route.description}}
     {{route.price}}
