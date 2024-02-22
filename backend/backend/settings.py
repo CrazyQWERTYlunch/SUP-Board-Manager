@@ -31,7 +31,9 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
-
+INTERNAL_IPS = [
+     '127.0.0.1',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
+    # Добавленные
+    'debug_toolbar',
     
 
     # Созданные приложения
@@ -53,6 +59,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

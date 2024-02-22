@@ -12,9 +12,8 @@ class Category(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Название') # db_index=True, - возможно стоит добавить
     slug = models.SlugField(max_length=150, unique=True, verbose_name='URL') # editable=True
     description = models.TextField(blank=True, null=True, verbose_name='Описание услуги')
-    image = models.ImageField(upload_to='category_images/%Y/%m/%d', blank=True, null=True, verbose_name='Изображение')
-    # is_need_route = models.BooleanField(default=False, verbose_name='Наличие маршрута') # Подумать если буду добавлять сертификаты и аренду
-    # Пока делаю только маршрутные опции и йогу, маршруты=продукты
+    image = models.ImageField(upload_to='category_images', blank=True, null=True, verbose_name='Изображение')
+    
     class Meta:
         unique_together = ('slug', )
         db_table = 'category'
@@ -44,7 +43,7 @@ class Route(models.Model):
     complexity = models.DecimalField(default=5.00, max_digits=3, decimal_places=2, verbose_name="Сложность" ) # Возможно переделать, чтобы не проводить доп.действий
     duration = models.PositiveSmallIntegerField(verbose_name='Продолжительность')
     distance = models.CharField(max_length=50, verbose_name='Протяженность')
-    image = models.ImageField(upload_to='route_images/%Y/%m/%d', blank=True, null=True, verbose_name='Изображение')
+    image = models.ImageField(upload_to='route_images', blank=True, null=True, verbose_name='Изображение')
     price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2, verbose_name='Цена маршрута')
     # status = 
 

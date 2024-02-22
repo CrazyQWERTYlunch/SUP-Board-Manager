@@ -3,38 +3,42 @@
 
 
 {% block content %}
-    {% for route in routes %}
 
-    <div class="container-fluid mt-4">
+    <div class="container-fluid m-4">
+        {% for route in routes %}
         <div class="row">
             <div class="col-lg-1">
                 <!--Просто отступ-->
             </div>
-                <!--Карта маршрута-->
-                <div class="col-lg-10 col-md-12">
+            <!--Карта маршрута-->
+            <div class="col-lg-10 col-md-12">
                     <div class="card m-3">
                         <div class="row g-0">
-                        <div class="col-md-5">
-                            {% if route.image %}
-                                <img src="{{route.image.url}}" class="img-fluid rounded-start" alt="{{route.name}}">
-                            {% endif %}
-                        </div>
-                        <div class="col-md-7">
-                            <div class="card-body">
-                            <h5 class="card-title"><h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5></h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-body-secondary">цена: {{ route.price }}</small></p>
+                            <div class="col-md-5">
+                                {% if route.image %}
+                                    <img src="{{route.image.url}}" class="img-fluid rounded-start" alt="{{route.name}}">
+                                {% endif %}
                             </div>
-                        </div>
+                            <div class="col-md-7">
+                                <div class="card-body">
+                                    <h5 class="card-title"><h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5></h5>
+                                    <p class="card-text">{{ route.descriptrion }}</p>
+                                    <p class="card-text">Продолжительность: {{ route.duration }}</p>
+                                    <p class="card-text">Протяженность: {{ route.distance }}</p>
+                                    <p class="card-text">Сложность: {{ route.complexity }}</p>
+                                    <p class="card-text"><small class="text-body-secondary">Цена: {{ route.price }}</small></p>    
+                                </div>
+                            </div>
                         </div>
                     </div> 
                 </div>
-
-            <div class="col-lg-1 col-md-12">
                 
+                <div class="col-lg-1 col-md-12">
+                    
+                </div>
             </div>
-          </div>
         </div>
+        {% endfor %}
     </div>
 
 
@@ -45,7 +49,6 @@
             
         {% comment %} <h5><a href="{{ route.get_absolute_url }}">{{ route.name }}</a></h5> {% endcomment %}
         {% comment %} {{ route.price }}  {% endcomment %}
-        <p></p>
         
-    {% endfor %}
+
 {% endblock %}
