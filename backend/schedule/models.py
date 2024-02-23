@@ -1,12 +1,13 @@
 from django.db import models
 from catalog.models import Route, Category
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Event(models.Model):
     STATUS = (
         'Предстоит',
         'Идёт',
-        'Завершена',
+        'Завершен',
+        'Отменен',
     )
     category = models.ForeignKey(to=Category, default='SUP-прогулка', on_delete=models.CASCADE, verbose_name='Категория')
     route = models.ForeignKey(to=Route, on_delete=models.CASCADE, verbose_name='Маршрут') # limit_choices_to={"category": category} может стоит как-то добавить и ограничить
@@ -24,13 +25,14 @@ class Event(models.Model):
 
 
 
-# class EventManager(models.Manager):
-#     def get_queryset(self) -> models.QuerySet:
-#         return super().get_queryset().filter(start__gt=datetime.now())
-# # 
-# class EventProxy(Event):
+class EventManager(models.Manager):
+    def get_queryset(self) -> models.QuerySet:
+        today = datetime.today()
+        return super().get_queryset().filter(start__range=(today, today + timedelta(weeks=2)))
+# 
+class EventProxy(Event):
 
-#     objects = EventManager()
+    objects = EventManager()
 
-#     class Meta:
-#         proxy = True
+    class Meta:
+        proxy = True

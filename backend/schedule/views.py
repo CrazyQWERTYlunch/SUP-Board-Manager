@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_list_or_404
 from datetime import datetime 
-from .models import Event
+from .models import EventProxy
 
 def index(request, category_slug=None):
     # Реализация фильтров
@@ -8,9 +8,9 @@ def index(request, category_slug=None):
     # time = request.Get.get('time', None)
 
     if category_slug == 'all' or category_slug is None: # пока оставляем этот костылик
-        events = Event.objects.all()
+        events = EventProxy.objects.all()
     else:
-        events = get_list_or_404(Event.objects.filter(category__slug=category_slug))
+        events = get_list_or_404(EventProxy.objects.filter(category__slug=category_slug))
 
 
 

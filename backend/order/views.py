@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.db import transaction
 from django.forms import ValidationError
 from django.contrib import messages
 from order.models import EventOrder
 from schedule.models import Event
 from order.forms import CreateOrderForm
+from django.urls import reverse
 
 # Create your views here.
 def create_order(request, event_id=None):
@@ -32,8 +33,8 @@ def create_order(request, event_id=None):
                     messages.success(request, 'Заказ оформлен!')
                     return redirect('main:index')
             except ValidationError as e:
-                messages.success(request, str(e)) # Исправить, чтобы высвечивалось и пользователю
-                return redirect('schedule:index')                       
+                messages.warning(request, e) # Исправить, чтобы высвечивалось и пользователю
+                return redirect('schedule:index')                     
        
     form = CreateOrderForm()
 

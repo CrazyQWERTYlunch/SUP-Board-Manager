@@ -93,7 +93,7 @@
     </header> {% endcomment %}
 <!--Место для фильтров-->
 
-
+    {% include "includes/notifications.html" %}
     <h1> {% block content %}
         Home - page
         {% endblock %}</h1>
@@ -101,7 +101,9 @@
 
     {% block footer %}
     {% endblock %}
-
-    <script src="{% static "js/bootstrap.bundle.min.js" %}" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script src="{% static "js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "js/jquery-ajax.js" %}"></script>
+    <script src="{% static "js/bootstrap/bootstrap.bundle.min.js" %}"></script>
 </body>
 </html>
