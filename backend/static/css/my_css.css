@@ -1,0 +1,77 @@
+.event-grid-container {
+    position: relative;
+    overflow-x: auto;
+}
+
+.event-grid {
+    display: flex;
+    margin: 0 -10px;
+}
+
+.event-column {
+    flex: 0 0 auto;
+    margin: 0 10px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.event-column h3 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.event {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.event h4 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.event p {
+    margin: 10px 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.prev-button {
+    left: 10px;
+}
+
+.next-button {
+    right: 10px;
+}

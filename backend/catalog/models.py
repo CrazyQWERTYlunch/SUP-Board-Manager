@@ -9,6 +9,23 @@ def rand_slug():
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(3))
 
 class Category(models.Model):
+    """
+    Модель представляет собой категорию услуги.
+
+    Атрибуты модели:
+        name (CharField): Название категории.
+        slug (SlugField): URL-адрес категории, создается автоматически на основе названия.
+        description (TextField): Описание услуги.
+        image (ImageField): Изображение категории.
+
+    Пример использования:
+        Создание объекта категории:
+        >>> from catalog.models import Category
+        >>> cat = Category.objects.create(name='Название категории', description='Описание категории')
+
+        Получение всех категорий:
+        >>> categories = Category.objects.all()
+    """
     name = models.CharField(max_length=150, unique=True, verbose_name='Название') # db_index=True, - возможно стоит добавить
     slug = models.SlugField(max_length=150, unique=True, verbose_name='URL') # editable=True
     description = models.TextField(blank=True, null=True, verbose_name='Описание услуги')

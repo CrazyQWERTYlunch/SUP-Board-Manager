@@ -8,4 +8,17 @@
     {{route.description}}
     {{route.price}}
     {{route.complexity}}
+
+    {% if data %}
+        <p>Записаться на ближайшие прогулки по этому маршруту</p>
+        {% for event in data %}
+        <p>    
+            <a class="btn btn-dark" href="{% url "order:create_order" event.id %}"> <!--Чтобы работало с конкретными прогулками передавать id-->     
+                {{event.start}}
+            </a>
+        </p>
+                
+        {% endfor %}    
+    {% endif %}
+    
 {% endblock  %}

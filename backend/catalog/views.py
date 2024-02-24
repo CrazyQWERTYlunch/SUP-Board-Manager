@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from .models import Category, Route
+from schedule.models import EventProxy
 
 
 
@@ -20,9 +21,12 @@ def routes_view(request):
 def route_detail_view(request, slug=False):
     """Представление отдельного маршрута"""
     route = get_object_or_404(Route, slug=slug)
+    data = EventProxy.objects.filter(route=route)
+
     context = {
         'title': route.name,
         'route': route,
+        'data': data
     }
 
     return render(request, 'catalog/route_detail.html', context=context)
