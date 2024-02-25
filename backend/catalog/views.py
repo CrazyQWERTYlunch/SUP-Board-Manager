@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-
+# from django.contrib.postgres.search import SearchVector
 from .models import Route
 from schedule.models import EventProxy
 from django.utils import timezone
@@ -34,7 +34,8 @@ def routes_view(request):
 
     if search_query:
         routes = routes.filter(name__icontains=search_query)
-
+        # routes = routes.annotate(search=SearchVector("nane","description")).filter(search=query)
+        #  Возможно позже пропишу улучшенный поиск
     context = {
         'title': 'SUP-Маршруты',
         'routes': routes,
