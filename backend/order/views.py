@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.db import transaction
 from django.forms import ValidationError
 from django.contrib import messages
@@ -7,8 +7,9 @@ from django.contrib import messages
 from order.models import EventOrder
 from schedule.models import EventProxy
 from order.forms import CreateOrderForm
+from django.urls import reverse
 
-
+# Create your views here.
 def create_order(request, event_id=None):
     event = get_object_or_404(EventProxy, id=event_id)
 
@@ -37,14 +38,9 @@ def create_order(request, event_id=None):
                     return redirect('main:index')
             except ValidationError as e:
                 messages.warning(request, e) # Исправить, чтобы высвечивалось и пользователю
-                context = {
-                    'title': 'Оформление заказа',
-                    'form': form,
-                    'event': event,
-                }
-                return render(request, 'order/create_order.html', context=context)                       
-    else:
-        form = CreateOrderForm()
+                return redirect('schedule:index')                     
+       
+    form = CreateOrderForm()
 
     context = {
         'title': 'Оформление заказа',
