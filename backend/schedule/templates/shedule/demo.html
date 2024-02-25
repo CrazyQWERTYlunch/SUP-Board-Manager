@@ -1,82 +1,69 @@
 {% extends "base.html" %}
 {% load catalog_tags %}
-
+{% load tz %}
 {% block content %}
     <!--Прописать поля для фильтров -->
+
 <div class="container">
-    <div class="row mt-1 ">
-        <!-- Каталог -->
+    <div class="row mt-1">
+        <!-- Категории -->
         <div class="dropdown mb-2">
             <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Формат
-                {% comment %} <img class="mx-1" src="../deps/icons/grid-fill.svg" alt="Catalog Icon" width="16"
-                    height="16"> {% endcomment %}
             </button>
             <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
                 {% tag_categories as categories %}
                 {% for category in categories %}
-                    <li><a class="dropdown-item text-white" href="{% url "schedule:index" category.slug %}">{{category.name}}</a></li>
+                    <li><a class="dropdown-item text-white" href="{% url 'schedule:index' category.slug %}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
+
+        {% comment %} <!-- Фильтр по дню -->
+        <div class="input-group mb-2">
+            <label for="day-input" class="form-label">Выберите день:</label>
+            <input type="date" class="form-control" id="day-input">
+        </div>
+
+        <!-- Фильтр по времени -->
+        <div class="input-group mb-2">
+            <label for="time-input" class="form-label">Выберите время:</label>
+            <input type="time" class="form-control" id="time-input">
+        </div>
+
+        <!-- Кнопка применить фильтры -->
+        <button class="btn btn-dark" id="filter-button">Применить фильтры</button> {% endcomment %}
     </div>
 </div>
 
 
-    {% comment %} <div class="dropdown mb-2">
-        <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Фильтры
-        </button>              
-        <form action="{% url "schedule:index" slug_url%}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
-  
-            </div>
-            <p class="text-white mx-3 mt-3">Время:</p>
-            <div class="form-check text-white mx-3">
-                <input class="form-check-input" type="radio" name="time" id="flexRadioDefault1" value="12:00:00" checked>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    утро (04:00-12:00)
-                </label>
-            </div>
-            <div class="form-check text-white mx-3">
-                <input class="form-check-input" type="radio" name="time" id="flexRadioDefault2" value="17:00:00">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    день (12:00-17:00)
-                </label>
-            </div>
-            <div class="form-check text-white mx-3">
-                <input class="form-check-input" type="radio" name="time" id="flexRadioDefault3" value="22:00:00">
-                <label class="form-check-label" for="flexRadioDefault3">
-                    вечер (17:00-22:00)
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary mx-3 mt-3">Применить</button>
-            <p>
-                <label for="date">Дата: </label>
-                <input type="date" id="date" name="date"/>
-            </p>
-        </form>
+</div>
 
-
+<div class="event-grid-container">
+    <button class="scroll-button prev-button" onclick="scrollLeft()">&#10094;</button>
+    <div class="event-grid">
+        {% regroup events by start|date as event_dates %}
+        {% for date in event_dates %}
+            <div class="event-column">
+                <h3>{{ date.grouper }}</h3>
+                {% for event in date.list %}
+                    <div class="event">
+                        <h4>{{ event.route.name }}</h4>
+                        <p>Price: {{ event.route.price }}</p>
+                        <p>Time: {{ event.start|timezone:"Europe/Moscow"|time }}</p>
+                        <a href="{% url 'catalog:route' event.route.slug %}">More Info</a>
+                        <form action="{% url 'order:create_order' event.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Sign Up" class="btn btn-dark">
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
     </div>
-</div> {% endcomment %}
+    <button class="scroll-button next-button" onclick="scrollRight()">&#10095;</button>
+</div>
 
-
-    {% for event in events %}
-        <a href="{% url "catalog:route" event.route.slug %}"> {% comment %} Пока делаю возврат на страницу/карту прогулки {% endcomment %}
-            {{event.id}}
-            {{event.route.name}}
-            {{event.route.price}}
-            {{event.date}}
-            {{event.start}}
-            {{event.end}}
-        </a>
-            <a class="btn btn-dark" href="{% url "order:create_order" event.id %}"> <!--Чтобы работало с конкретными прогулками передавать id-->
-                <p>
-                    +Записаться на прогулку+
-                </p>
-            </a>
-    {% endfor %}
 
 {% endblock  %}

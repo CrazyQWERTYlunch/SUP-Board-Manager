@@ -9,6 +9,23 @@ def rand_slug():
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(3))
 
 class Category(models.Model):
+    """
+    Модель представляет собой категорию услуги.
+
+    Атрибуты модели:
+        name (CharField): Название категории.
+        slug (SlugField): URL-адрес категории, создается автоматически на основе названия.
+        description (TextField): Описание услуги.
+        image (ImageField): Изображение категории.
+
+    Пример использования:
+        Создание объекта категории:
+        >>> from catalog.models import Category
+        >>> cat = Category.objects.create(name='Название категории', description='Описание категории')
+
+        Получение всех категорий:
+        >>> categories = Category.objects.all()
+    """
     name = models.CharField(max_length=150, unique=True, verbose_name='Название') # db_index=True, - возможно стоит добавить
     slug = models.SlugField(max_length=150, unique=True, verbose_name='URL') # editable=True
     description = models.TextField(blank=True, null=True, verbose_name='Описание услуги')
@@ -45,8 +62,7 @@ class Route(models.Model):
     distance = models.CharField(max_length=50, verbose_name='Протяженность')
     image = models.ImageField(upload_to='route_images', blank=True, null=True, verbose_name='Изображение')
     price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2, verbose_name='Цена маршрута')
-    # status = 
-
+    
     class Meta:
         db_table = 'route'
         verbose_name = 'Маршрут'
@@ -60,18 +76,3 @@ class Route(models.Model):
     def get_absolute_url(self):
         return reverse("catalog:route", kwargs={"slug": self.slug})
     
-
-    # Прокси и менеджер модели
-    # Возможно их стоит добавлять в эвентовые события
-
-# class RouteManager(models.Manager):
-#     def get_queryset(self) -> models.QuerySet:
-#         return super(ProductManager, self).get_queryset().filter(status=True)
-
-# class RouteProxy(Route):
-
-#     # Переопределили метод
-#     objects = ProductManager()
-
-#     class Meta:
-#         proxy = True

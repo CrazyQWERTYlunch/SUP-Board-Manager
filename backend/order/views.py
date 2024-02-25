@@ -1,19 +1,23 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from django.db import transaction
 from django.forms import ValidationError
 from django.contrib import messages
+
+
 from order.models import EventOrder
-from schedule.models import Event
+from schedule.models import EventProxy
 from order.forms import CreateOrderForm
 
-# Create your views here.
+
 def create_order(request, event_id=None):
+    event = get_object_or_404(EventProxy, id=event_id)
+
     if request.method == 'POST':
         form = CreateOrderForm(request.POST)
         if form.is_valid():
             try:
                 with transaction.atomic():
-                    event=Event.objects.filter(id=event_id).first()
+                    # event=Event.objects.filter(id=event_id).first()
                     if event.remaining_seats < form.cleaned_data['quantity']:
                         raise ValidationError(f'На прогулке осталось {event.remaining_seats} мест')
                     
@@ -32,16 +36,20 @@ def create_order(request, event_id=None):
                     messages.success(request, 'Заказ оформлен!')
                     return redirect('main:index')
             except ValidationError as e:
-                messages.success(request, str(e)) # Исправить, чтобы высвечивалось и пользователю
-                return redirect('schedule:index')                       
-       
-    form = CreateOrderForm()
+                messages.warning(request, e) # Исправить, чтобы высвечивалось и пользователю
+                context = {
+                    'title': 'Оформление заказа',
+                    'form': form,
+                    'event': event,
+                }
+                return render(request, 'order/create_order.html', context=context)                       
+    else:
+        form = CreateOrderForm()
 
     context = {
         'title': 'Оформление заказа',
         'form': form,
-        'event': Event.objects.filter(id=event_id).first()
-
+        'event': event,
     }
 
     return render(request, 'order/create_order.html', context=context)

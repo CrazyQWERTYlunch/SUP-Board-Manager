@@ -6,6 +6,23 @@
     {% endif %}
     {{route.name}}
     {{route.description}}
-    {{route.price}}
     {{route.complexity}}
+    {{route.duration}}
+    {{route.distance}}
+    {{route.price}}
+
+    {% if events_for_route %}
+        <p>Записаться на ближайшие прогулки по этому маршруту</p>
+        {% for event in events_for_route %}
+        <p>    
+            <a class="btn btn-dark" href="{% url "order:create_order" event.id %}"> <!--Чтобы работало с конкретными прогулками передавать id-->     
+                {{event.start}}
+            </a>
+        </p>
+                
+        {% endfor %}
+    {% else %}
+        <p>В ближайшее время места на данный маршрут заняты</p>
+    {% endif %}
+    
 {% endblock  %}
