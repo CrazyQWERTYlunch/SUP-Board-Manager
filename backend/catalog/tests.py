@@ -1,7 +1,12 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
+from django.http import HttpRequest
+from django.core.exceptions import ObjectDoesNotExist
+from decimal import Decimal
 
+
+from .views import routes_view
 from .models import Route, Category
 
 class RouteViewTest(TestCase):
