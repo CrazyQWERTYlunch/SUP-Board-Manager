@@ -15,7 +15,7 @@
         <p>Записаться на ближайшие прогулки по этому маршруту</p>
         {% for event in events_for_route %}
         <p>    
-            <a class="btn btn-dark" href="{% url "order:create_order" event.id %}"> <!--Чтобы работало с конкретными прогулками передавать id-->     
+            <a class="btn btn-dark" href="{% url "order:create_order" event.id %}">   
                 {{event.start}}
             </a>
         </p>

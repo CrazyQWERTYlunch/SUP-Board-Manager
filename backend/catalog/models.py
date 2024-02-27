@@ -17,14 +17,6 @@ class Category(models.Model):
         slug (SlugField): URL-адрес категории, создается автоматически на основе названия.
         description (TextField): Описание услуги.
         image (ImageField): Изображение категории.
-
-    Пример использования:
-        Создание объекта категории:
-        >>> from catalog.models import Category
-        >>> cat = Category.objects.create(name='Название категории', description='Описание категории')
-
-        Получение всех категорий:
-        >>> categories = Category.objects.all()
     """
     name = models.CharField(max_length=150, unique=True, verbose_name='Название') # db_index=True, - возможно стоит добавить
     slug = models.SlugField(max_length=150, unique=True, verbose_name='URL') # editable=True
@@ -38,6 +30,12 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
     def __str__(self) -> str:
+        """
+        Возвращает строковое представление категории.
+
+        Returns:
+            str: Строковое представление категории.
+        """
         return self.name
     
     def save(self, *args, **kwargs):
@@ -46,12 +44,21 @@ class Category(models.Model):
             self.slug = slugify(rand_slug() + '-pickBetter' + self.name)
         super(Category, self).save(*args, **kwargs)
 
-    def get_absolute_url(self):
-        return reverse("catalog:category", kwargs={"category_slug": self.slug})
     
 class Route(models.Model):
     """
-    Модель существующих маршрутов
+    Модель существующих маршрутов.
+
+    Attributes:
+        category (Category): Категория маршрута.
+        name (str): Название маршрута.
+        slug (str): URL-адрес маршрута, создается автоматически на основе названия.
+        description (str): Описание маршрута.
+        complexity (float): Сложность маршрута (значение от 0 до 10).
+        duration (int): Продолжительность маршрута в минутах.
+        distance (str): Протяженность маршрута.
+        image (str): Изображение маршрута.
+        price (float): Цена маршрута.
     """
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, verbose_name='Категория') # Может быть лучше будет SET_DEFAULT?
     name = models.CharField(max_length=150, unique=True, verbose_name='Название')
@@ -70,9 +77,21 @@ class Route(models.Model):
         ordering = ('id', )
     
     
-    def __str__(self):
+    def __str__(self)-> str:
+        """
+        Возвращает строковое представление маршрута.
+
+        Returns:
+            str: Строковое представление маршрута.
+        """
         return f'{self.name} - {self.price}'
     
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
+        """
+        Получает абсолютный URL для маршрута.
+
+        Returns:
+            str: Абсолютный URL для маршрута.
+        """
         return reverse("catalog:route", kwargs={"slug": self.slug})
     

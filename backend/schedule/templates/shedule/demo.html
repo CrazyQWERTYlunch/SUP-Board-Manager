@@ -1,61 +1,136 @@
 {% extends "base.html" %}
 {% load catalog_tags %}
 {% load tz %}
+
 {% block content %}
-    <!--Прописать поля для фильтров -->
 
-<div class="container">
-    <div class="row mt-1">
-        <!-- Категории -->
-        <div class="dropdown mb-2">
-            <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Формат
-            </button>
-            <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
-                {% tag_categories as categories %}
-                {% for category in categories %}
-                    <li><a class="dropdown-item text-white" href="{% url 'schedule:index' category.slug %}">{{ category.name }}</a></li>
-                {% endfor %}
-            </ul>
+<!-- Форма для фильтрации (скрытая на мобильной версии) -->
+<div class="collapse d-md-none" id="filterCollapse">
+    <form method="get" action="{% url 'schedule:index' %}" class="mb-3">
+        <!-- Фильтры -->
+        <div class="row">
+            <!-- Фильтр по категории -->
+            <div class="col-md-4 mb-2">
+                <label for="category" class="form-label">Категория:</label>
+                <select id="category" name="category" class="form-select">
+                    {% tag_categories as categories %}
+                    {% for category in categories %}
+                        <option value="{{ category.slug }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Фильтр по времени начала -->
+            <div class="col-md-4 mb-2">
+                <label for="time_start" class="form-label">Начальное время:</label>
+                <input type="time" id="time_start" name="time_start" class="form-control" value="{{ time_start }}">
+            </div>
+
+            <!-- Фильтр по времени конца -->
+            <div class="col-md-4 mb-2">
+                <label for="time_end" class="form-label">Конечное время:</label>
+                <input type="time" id="time_end" name="time_end" class="form-control" value="{{ time_end }}">
+            </div>
         </div>
 
-        {% comment %} <!-- Фильтр по дню -->
-        <div class="input-group mb-2">
-            <label for="day-input" class="form-label">Выберите день:</label>
-            <input type="date" class="form-control" id="day-input">
-        </div>
-
-        <!-- Фильтр по времени -->
-        <div class="input-group mb-2">
-            <label for="time-input" class="form-label">Выберите время:</label>
-            <input type="time" class="form-control" id="time-input">
+        <!-- Фильтры по цене -->
+        <div class="row">
+            <div class="col-md-6 mb-2">
+                <label for="min_price" class="form-label">Минимальная цена:</label>
+                <input type="number" id="min_price" name="min_price" class="form-control" value="{{ min_price }}">
+            </div>
+            <div class="col-md-6 mb-2">
+                <label for="max_price" class="form-label">Максимальная цена:</label>
+                <input type="number" id="max_price" name="max_price" class="form-control" value="{{ max_price }}">
+            </div>
         </div>
 
         <!-- Кнопка применить фильтры -->
-        <button class="btn btn-dark" id="filter-button">Применить фильтры</button> {% endcomment %}
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">Применить фильтры</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Бургер кнопка для мобильной версии -->
+<div class="d-md-none mb-3">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+        Фильтры
+    </button>
+</div>
+
+<!-- Форма для фильтрации (видимая на десктопах) -->
+<form method="get" action="{% url 'schedule:index' %}" class="mb-3 d-none d-md-block">
+    <!-- Фильтры -->
+    <div class="row">
+        <!-- Фильтр по категории -->
+        <div class="col-md-4 mb-2">
+            <label for="category" class="form-label">Категория:</label>
+            <select id="category" name="category" class="form-select">
+                {% tag_categories as categories %}
+                {% for category in categories %}
+                    <option value="{{ category.slug }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Фильтр по времени начала -->
+        <div class="col-md-4 mb-2">
+            <label for="time_start" class="form-label">Начальное время:</label>
+            <input type="time" id="time_start" name="time_start" class="form-control" value="{{ time_start }}">
+        </div>
+
+        <!-- Фильтр по времени конца -->
+        <div class="col-md-4 mb-2">
+            <label for="time_end" class="form-label">Конечное время:</label>
+            <input type="time" id="time_end" name="time_end" class="form-control" value="{{ time_end }}">
+        </div>
     </div>
-</div>
 
+    <!-- Фильтры по цене -->
+    <div class="row">
+        <div class="col-md-6 mb-2">
+            <label for="min_price" class="form-label">Минимальная цена:</label>
+            <input type="number" id="min_price" name="min_price" class="form-control" value="{{ min_price }}">
+        </div>
+        <div class="col-md-6 mb-2">
+            <label for="max_price" class="form-label">Максимальная цена:</label>
+            <input type="number" id="max_price" name="max_price" class="form-control" value="{{ max_price }}">
+        </div>
+    </div>
 
-</div>
+    <!-- Кнопка применить фильтры -->
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary w-100">Применить фильтры</button>
+        </div>
+    </div>
+</form>
 
-<div class="event-grid-container">
+<!-- Контент -->
+<div class="event-grid-container mt-4">
     <button class="scroll-button prev-button" onclick="scrollLeft()">&#10094;</button>
     <div class="event-grid">
         {% regroup events by start|date as event_dates %}
         {% for date in event_dates %}
-            <div class="event-column">
+            <div class="event-column" style="flex-grow: 0.5;">
                 <h3>{{ date.grouper }}</h3>
                 {% for event in date.list %}
                     <div class="event">
                         <h4>{{ event.route.name }}</h4>
                         <p>Price: {{ event.route.price }}</p>
                         <p>Time: {{ event.start|timezone:"Europe/Moscow"|time }}</p>
-                        <a href="{% url 'catalog:route' event.route.slug %}">More Info</a>
-                        <form action="{% url 'order:create_order' event.id %}" method="post">
+                        <a href="{% url 'catalog:route' event.route.slug %}" class="btn btn-dark">More Info</a>
+                        <p>    
+                            <a class="btn btn-dark" href="{% url "order:create_order" event.id %}">   
+                                {{event.start}}
+                            </a>
+                        </p>
+                        {% comment %} <form action="{% url 'order:create_order' event.id %}" method="post">
                             {% csrf_token %}
-                            <input type="submit" value="Sign Up" class="btn btn-dark">
+                            <input type="submit" value="Sign Up" class="btn btn-dark"> {% endcomment %}
                         </form>
                     </div>
                 {% endfor %}
@@ -65,5 +140,4 @@
     <button class="scroll-button next-button" onclick="scrollRight()">&#10095;</button>
 </div>
 
-
-{% endblock  %}
+{% endblock %}

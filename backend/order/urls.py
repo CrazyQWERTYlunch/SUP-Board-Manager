@@ -4,6 +4,6 @@ from order import views
 app_name = 'order'
 
 urlpatterns = [
-    path('create_order/', views.create_order, name='create_order'),
+    # path('create_order/', views.create_order, name='create_order'),
     path('create_order/<int:event_id>/', views.create_order, name='create_order'),
 ]

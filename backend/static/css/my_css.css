@@ -1,13 +1,13 @@
+/* Общие стили */
 .event-grid-container {
     position: relative;
     overflow-x: auto;
+    white-space: nowrap;
 }
 
 .event-grid {
     display: flex;
     margin: 0 -10px;
-    overflow-x: auto; /* Позволяет прокручивать только по горизонтали */
-    white-space: nowrap;
 }
 
 .event-column {
@@ -76,4 +76,36 @@
 
 .next-button {
     right: 10px;
+}
+
+/* Стили для бургер кнопки */
+.burger-btn {
+    display: none;
+    position: relative;
+    z-index: 999;
+}
+
+.burger-btn:focus {
+    outline: none;
+}
+
+.burger-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Стили для кнопки "Применить фильтры" */
+.apply-btn {
+    margin-top: 10px;
+}
+
+/* Скрытие фильтров для мобильной версии */
+@media (max-width: 767px) {
+    .filter-form {
+        display: none;
+    }
+
+    .burger-btn {
+        display: block;
+    }
 }
