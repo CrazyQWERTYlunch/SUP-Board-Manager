@@ -67,32 +67,6 @@
     </header>
 
 
-{% comment %} 
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
-                    </form> {% endcomment %}
-
-
-    {% comment %} <header>
-        <nav class="navbar">
-            <div class="container">
-                <a class="navbar brand" href="{% url "main:index" %}">Главная</a>
-                    <ul class="navbar-nav">
-                        <li><a class="nav-item dropdown" href="#">Информация</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url "main:about" %}">Про нас</a></li>
-                                <li><a class="dropdown-item" href="#">Контактная информация</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="nav-item" href="{% url "catalog:routes" %}">Наши маршруты</a></li>
-                        <li><a class="nav-item" href="{% url "schedule:index" %}">Расписание</a></li>
-                    </ul>
-            </div>
-        </nav>
-    </header> {% endcomment %}
-<!--Место для фильтров-->
-
     {% include "includes/notifications.html" %}
     <h1> {% block content %}
         Home - page
