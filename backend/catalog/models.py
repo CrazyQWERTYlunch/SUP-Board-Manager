@@ -18,10 +18,9 @@ class Category(models.Model):
         description (TextField): Описание услуги.
         image (ImageField): Изображение категории.
     """
-    name = models.CharField(max_length=150, unique=True, verbose_name='Название') # db_index=True, - возможно стоит добавить
-    slug = models.SlugField(max_length=150, unique=True, verbose_name='URL') # editable=True
-    description = models.TextField(blank=True, null=True, verbose_name='Описание услуги')
-    image = models.ImageField(upload_to='category_images', blank=True, null=True, verbose_name='Изображение')
+    name = models.CharField(max_length=150, unique=True, verbose_name='Название')
+    slug = models.SlugField(max_length=150, unique=True, verbose_name='URL')
+
     
     class Meta:
         unique_together = ('slug', )
