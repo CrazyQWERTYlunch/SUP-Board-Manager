@@ -1,15 +1,57 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% if route.image %}
+                    <img src="{{route.image.url}}" class="img-fluid rounded-start mb-3" alt="{{route.name}}">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <p><strong>Название маршрута:</strong> {{route.name}}</p>
+                <p><strong>Описание:</strong> {{route.description}}</p>
+                <p><strong>Сложность:</strong> {{route.complexity}}</p>
+                <p><strong>Продолжительность:</strong> {{route.duration}}</p>
+                <p><strong>Протяженность:</strong> {{route.distance}}</p>
+                <p><strong>Цена:</strong> {{route.price}}</p>
+            </div>
+        </div>
+        
+        {% if events_for_route %}
+            <div class="row">
+                <div class="col">
+                    <p class="mt-4"><strong>Записаться на ближайшие прогулки по этому маршруту:</strong></p>
+                    {% for event in events_for_route %}
+                    <p>    
+                        <a class="btn btn-dark" href="{% url "order:create_order" event.id %}">   
+                            {{event.start}}
+                        </a>
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col">
+                    <p class="mt-4"><strong>В ближайшее время места на данный маршрут заняты</strong></p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock  %}
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
     {% if route.image %}
         <img src="{{route.image.url}}" class="img-fluid rounded-start" alt="{{route.name}}">
     {% endif %}
-    {{route.name}}
-    {{route.description}}
-    {{route.complexity}}
-    {{route.duration}}
-    {{route.distance}}
-    {{route.price}}
+    <p>{{route.name}}</p>
+    <p>{{route.description}}</p>
+    <p>{{route.complexity}}</p>
+    <p>{{route.duration}}</p>
+    <p>{{route.distance}}</p>
+    <p>{{route.price}}</p>
 
     {% if events_for_route %}
         <p>Записаться на ближайшие прогулки по этому маршруту</p>
@@ -25,4 +67,4 @@
         <p>В ближайшее время места на данный маршрут заняты</p>
     {% endif %}
     
-{% endblock  %}
+{% endblock  %} {% endcomment %}

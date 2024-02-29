@@ -14,7 +14,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Route)
 class RouteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'category', 'name', 'slug', 'price')
+    list_display = ('id', 'name', 'category', 'slug', 'price')
     list_filter = ('complexity', 'duration', 'price')
     ordering = ('category','complexity', 'duration', 'price')
 

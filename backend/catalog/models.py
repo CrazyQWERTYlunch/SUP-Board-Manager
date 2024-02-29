@@ -15,8 +15,6 @@ class Category(models.Model):
     Атрибуты модели:
         name (CharField): Название категории.
         slug (SlugField): URL-адрес категории, создается автоматически на основе названия.
-        description (TextField): Описание услуги.
-        image (ImageField): Изображение категории.
     """
     name = models.CharField(max_length=150, unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=150, unique=True, verbose_name='URL')
@@ -59,15 +57,15 @@ class Route(models.Model):
         image (str): Изображение маршрута.
         price (float): Цена маршрута.
     """
-    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, verbose_name='Категория') # Может быть лучше будет SET_DEFAULT?
+    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, verbose_name='Категория')
     name = models.CharField(max_length=150, unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=200, unique=True, verbose_name='URL')
     description = models.TextField(blank=True, null=True, verbose_name='Описание маршрута')
-    complexity = models.DecimalField(default=5.00, max_digits=3, decimal_places=2, verbose_name="Сложность" ) # Возможно переделать, чтобы не проводить доп.действий
+    complexity = models.DecimalField(default=5.00, max_digits=3, decimal_places=2, verbose_name="Сложность" )
     duration = models.PositiveSmallIntegerField(verbose_name='Продолжительность')
     distance = models.CharField(max_length=50, verbose_name='Протяженность')
     image = models.ImageField(upload_to='route_images', blank=True, null=True, verbose_name='Изображение')
-    price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2, verbose_name='Цена маршрута')
+    price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Цена маршрута')
     
     class Meta:
         db_table = 'route'

@@ -42,9 +42,6 @@ def apply_filters_to_routes(routes, category_id: int, complexity: str, duration:
             routes = routes.filter(price__gte=5000)
     if search_query:
         routes = routes.filter(name__icontains=search_query)
-        # from django.contrib.postgres.search import SearchVector
-        # routes = routes.annotate(search=SearchVector("nane","description")).filter(search=query)
-        # Возможно позже пропишу улучшенный поиск
     return routes
 
 
@@ -99,7 +96,6 @@ def get_route_details(slug: str) -> Dict[str, Any]:
         Dict[str, Any]: Информация о маршруте и событиях.
     """
     route = get_object_or_404(Route, slug=slug)
-    # Покажи ближайшие 5 событий с этим маршрутом на которые остались места  (срезом ограничиваем количество) 
     events_for_route = EventProxy.objects.filter(route=route, remaining_seats__gt=0).order_by('start')[:5] 
     return {
         'route': route,
