@@ -69,5 +69,5 @@ class CreateOrderForm(forms.ModelForm):
             str: Номер телефона.
         """
         phone_number = self.cleaned_data.get('phone_number')
-        validate_phone_number_format(phone_number)  # Вызываем валидатор для проверки формата
+        validate_phone_number_format(phone_number)
         return phone_number

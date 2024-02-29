@@ -18,7 +18,7 @@ class Event(models.Model):
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, default=None, verbose_name='Категория')
     route = models.ForeignKey(to=Route, on_delete=models.CASCADE,default=None, verbose_name='Маршрут')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Предстоит', verbose_name='Статус события')
-    price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2, verbose_name='Цена')
+    price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Цена')
     total_seats = models.PositiveSmallIntegerField(verbose_name='Всего мест', default=0)
     remaining_seats = models.PositiveIntegerField(verbose_name='Осталось мест', default=0) 
     start = models.DateTimeField(null=True, blank=True, verbose_name='Начало прогулки')

@@ -37,7 +37,7 @@ def index(request) -> HttpResponse:
             'min_price': min_price,
             'max_price': max_price,
         }
-        return render(request, 'shedule/demo.html', context=context)
+        return render(request, 'shedule/schedule.html', context=context)
     except Exception as e:
         error_message = "Произошла ошибка: {}".format(str(e))
         return HttpResponseServerError(error_message)
