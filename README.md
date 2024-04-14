@@ -11,7 +11,7 @@
 
 ## Установка
 
-1. Клонируйте репозиторий на локальную машину: git clone https://github.com/CrazyQWERTYlunch/new-diplom-gb.git
+1. Клонируйте репозиторий на локальную машину: git clone https://github.com/CrazyQWERTYlunch/SUP-Board-Manager.git
 2. Установите зависимости Python, используя pip: pip install -r requirements.txt
 3. Настройте базу данных PostgreSQL в файле settings.py вашего проекта
 4. Выполните миграции для создания необходимых таблиц в базе данных: python manage.py migrate
